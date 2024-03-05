@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="grid grid-cols-3 gap-4 container mx-auto my-8">
+{% for el in data %}
+    <div class="card bg-neutral-content shadow-xl">
+        <div class="card-body items-center text-center">
+          <h2 class="card-title"> {{el.id}} </h2>
+          <p class="text-xl font-bold"> {{el.taskTitle}} </p>
+          <p> {{el.taskDescription}} </p>
+          <p> {{el.taskAssignDate}} </p>   
+          <p>
+            {% for cat in el.taskCategory.all %}
+                <span> {{cat}} </span>
+            {% endfor %}
+          </p>
+          {% if el.isCompleted %}
+            <span class="text-xl font-bold text-blue-500">Completed</span>
+          {% else %}
+          <div class="card-actions">
+            <a href="{% url "edit" el.id%}"><button class="btn btn-primary">Edit</button></a>
+            <a href="{% url "delete" el.id%}"><button class="btn btn-primary">Delete</button></a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+{% endfor %}
+</div>
+
+{% endblock content %}
